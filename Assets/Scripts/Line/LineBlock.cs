@@ -71,6 +71,8 @@ public class LineBlock : MonoBehaviour
         else
         {
 
+            //                                                                   COK UZUN SAVELIO
+
             l.ChoiceLabel = ChoiceLabelField.text;
             l.LineText = LineField.text;
             l.Talker = TalkerField.text;
@@ -79,14 +81,17 @@ public class LineBlock : MonoBehaviour
 
             l.Next = new List<Line>();
 
+            SaveLoadSystem.instance.lineblocks.Add(this);
+            line = l;
+            hasused = true;
+
             for (int i = 0; i < OutputsParent.childCount; i++)
             {
                 if (OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode)
                     l.Next.Add(OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode.GetComponent<IONode>().NodeBlock.Save());
             }
 
-            line = l;
-            hasused = true;
+            
         }
 
         return l;
@@ -128,13 +133,10 @@ public class LineBlock : MonoBehaviour
 
     public void CleanPastData()
     {
+
+        line = null;
         hasused = false;
 
-        for (int i = 0; i < OutputsParent.childCount; i++)
-        {
-            if (OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode)
-                OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode.GetComponent<IONode>().NodeBlock.CleanPastData();
-        }
     }
 
     public void DeleteForUI()

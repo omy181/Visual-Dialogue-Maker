@@ -41,6 +41,8 @@ public class SaveLoadSystem : MonoBehaviour
             return;
         }
 
+        CleanPastData();
+
         Line Dialogue = StartBlock.Save();
 
         Dialogue.lastID = lastID;
@@ -83,7 +85,11 @@ public class SaveLoadSystem : MonoBehaviour
 
     void CleanPastData()
     {
-        StartBlock.CleanPastData();
+        foreach(LineBlock lb in lineblocks)
+        {
+            lb.CleanPastData();
+        }
+
         lineblocks.Clear();
     }
     public LineBlock DoesIDExist(int id)

@@ -60,8 +60,8 @@ public class NodeInteractions : MonoBehaviour
         NodeHold.GetComponent<IONode>().LoseConnection();
 
         // create new block
-      //  GameObject a = BlockManager.instance.CreateEmptyBlock();
-      //  ConnectNodesAuto(NodeHold.GetComponent<IONode>().NodeBlock.GetComponent<LineBlock>(),a.GetComponent<LineBlock>());
+        //GameObject a = BlockManager.instance.CreateEmptyBlock();
+        //ConnectNodesAuto(NodeHold.GetComponent<IONode>().NodeBlock.GetComponent<LineBlock>(),a.GetComponent<LineBlock>());
 
             NodeHold = null;       
     }
