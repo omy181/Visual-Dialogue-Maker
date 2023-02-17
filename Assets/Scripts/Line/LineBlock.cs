@@ -60,18 +60,14 @@ public class LineBlock : MonoBehaviour
     }
     public Line Save()
     {
-        Line l = new Line();
-
-        
-
+         
         if (hasused)
         {
             return line;
         }
         else
         {
-
-            //                                                                   COK UZUN SAVELIO
+            Line l = new Line();
 
             l.ChoiceLabel = ChoiceLabelField.text;
             l.LineText = LineField.text;
@@ -82,19 +78,26 @@ public class LineBlock : MonoBehaviour
             l.Next = new List<Line>();
 
             SaveLoadSystem.instance.lineblocks.Add(this);
-            line = l;
+            
             hasused = true;
+            line = l;
 
             for (int i = 0; i < OutputsParent.childCount; i++)
             {
-                if (OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode)
-                    l.Next.Add(OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode.GetComponent<IONode>().NodeBlock.Save());
+                GameObject connected = OutputsParent.GetChild(i).GetComponent<IONode>().ConnectedNode;
+
+                if (connected)
+                {
+                        l.Next.Add(connected.GetComponent<IONode>().NodeBlock.Save());                 
+                }
+                    
             }
 
-            
+
+            return l;
         }
 
-        return l;
+        
     }
 
     public void Load(Line l,Vector3 pos)
