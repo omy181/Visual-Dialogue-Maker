@@ -9,7 +9,8 @@ public class SaveLoadSystem : MonoBehaviour
     public LineBlock StartBlock;
 
     public int lastID = 0;
-    public List<LineBlock> lineblocks = new List<LineBlock>();
+
+    public Dictionary<int,LineBlock> lineblocks = new();
     public int GenerateID
     {
         get
@@ -26,10 +27,6 @@ public class SaveLoadSystem : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
-    {
-        CleanPastData();
-    }
     public void Save()
     {
 
@@ -41,19 +38,20 @@ public class SaveLoadSystem : MonoBehaviour
             return;
         }
 
-        CleanPastData();
 
-        Line Dialogue = StartBlock.Save();
+        Dialogue dialogue = new();
 
-        Dialogue.lastID = lastID;
+        StartBlock.Save(dialogue);
 
-        string data = JsonUtility.ToJson(Dialogue);
+        dialogue.lastID = lastID;
+
+        string data = JsonUtility.ToJson(dialogue);
 
         File.WriteAllText(p, data);
 
         Holylib.Debug.TextShower.ShowText("Saved to " + p, 4);
 
-        CleanPastData();
+
     }
 
     public void Load()
@@ -66,42 +64,20 @@ public class SaveLoadSystem : MonoBehaviour
             return;
         }
 
-        CleanPastData();
+        lineblocks.Clear();
 
         string json = File.ReadAllText(p);
 
-        Line l = JsonUtility.FromJson<Line>(json);
+        Dialogue dialogue = JsonUtility.FromJson<Dialogue>(json);
 
         CardSortingManager.instance.ClearEveryCard();
 
-        StartBlock.Load(l,StartBlock.transform.position);
+        StartBlock.Load(dialogue,0,StartBlock.transform.position);
 
-        lastID = l.lastID;
+        lastID = dialogue.lastID;
 
         Holylib.Debug.TextShower.ShowText("Loaded",4);
 
-        CleanPastData();
     }
 
-    void CleanPastData()
-    {
-        foreach(LineBlock lb in lineblocks)
-        {
-            lb.CleanPastData();
-        }
-
-        lineblocks.Clear();
-    }
-    public LineBlock DoesIDExist(int id)
-    {
-        foreach(LineBlock lb in lineblocks)
-        {
-            if(lb.ID == id)
-            {
-                return lb;
-            }
-        }
-
-        return null;
-    }
 }

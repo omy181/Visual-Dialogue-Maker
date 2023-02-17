@@ -11,9 +11,6 @@ public class LineBlock : MonoBehaviour
 
     public int ID;
 
-    public Line line;
-    public bool hasused;
-
     public Transform OutputsParent;
     public Transform InputsParent;
 
@@ -58,14 +55,10 @@ public class LineBlock : MonoBehaviour
             Instantiate(BlockManager.instance.InputNodePrefab, InputsParent);
         }*/
     }
-    public Line Save()
+    public int Save(Dialogue dialogue)
     {
          
-        if (hasused)
-        {
-            return line;
-        }
-        else
+        if (!dialogue.lines.ContainsKey(ID))
         {
             Line l = new Line();
 
@@ -75,12 +68,10 @@ public class LineBlock : MonoBehaviour
 
             l.ID = ID;
 
-            l.Next = new List<Line>();
+            l.Next = new();
 
-            SaveLoadSystem.instance.lineblocks.Add(this);
+            dialogue.lines.Add(ID,l);
             
-            hasused = true;
-            line = l;
 
             for (int i = 0; i < OutputsParent.childCount; i++)
             {
@@ -88,31 +79,38 @@ public class LineBlock : MonoBehaviour
 
                 if (connected)
                 {
-                        l.Next.Add(connected.GetComponent<IONode>().NodeBlock.Save());                 
+                        l.Next.Add(connected.GetComponent<IONode>().NodeBlock.Save(dialogue));                 
                 }
                     
             }
 
 
-            return l;
+            
         }
 
-        
+        return ID;
+
     }
 
-    public void Load(Line l,Vector3 pos)
+    public void Load(Dialogue dialogue,int id,Vector3 pos)
     {
+
+        Line l = dialogue.lines[id];
 
         ChoiceLabelField.text = l.ChoiceLabel;
         LineField.text = l.LineText;
         TalkerField.text = l.Talker;
         ID = l.ID;
 
-        SaveLoadSystem.instance.lineblocks.Add(this);
+        SaveLoadSystem.instance.lineblocks.Add(id,this);
 
         for (int i = 0; i < l.Next.Count; i++)
         {
-            LineBlock lb = SaveLoadSystem.instance.DoesIDExist(l.Next[i].ID);
+            LineBlock lb = null;
+
+            if (SaveLoadSystem.instance.lineblocks.ContainsKey(l.Next[i]))
+                lb = SaveLoadSystem.instance.lineblocks[l.Next[i]];
+
 
             if (lb)
             {
@@ -125,21 +123,13 @@ public class LineBlock : MonoBehaviour
 
                 block.transform.position = pos + new Vector3(5, i * 3, 0);
 
-                block.GetComponent<LineBlock>().Load(l.Next[i], block.transform.position);
+                block.GetComponent<LineBlock>().Load(dialogue,dialogue.lines[id].Next[i], block.transform.position);
 
                 NodeInteractions.instance.ConnectNodesAuto(this, block.GetComponent<LineBlock>());
             }
 
             
         }
-    }
-
-    public void CleanPastData()
-    {
-
-        line = null;
-        hasused = false;
-
     }
 
     public void DeleteForUI()

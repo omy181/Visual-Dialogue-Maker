@@ -7,9 +7,8 @@ public class Line
     public string LineText;
     public string ChoiceLabel;
 
-    public List<Line> Next;
+    public List<int> Next;
 
     public int ID;
 
-    public int lastID;
 }
