@@ -83,7 +83,7 @@ public class SaveLoadSystem : MonoBehaviour
 
         BlockManager.instance.talkers = dialogue.talkers;
 
-        StartBlock.Load(dialogue,0,StartBlock.transform.position);
+        StartBlock.Load(dialogue,0);
 
         lastID = dialogue.lastID;
 

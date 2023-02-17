@@ -76,6 +76,8 @@ public class LineBlock : MonoBehaviour
 
             l.ID = ID;
 
+            l.BlockPosition = transform.position;
+
             l.Next = new();
 
             dialogue.lines.Add(ID,l);
@@ -100,10 +102,12 @@ public class LineBlock : MonoBehaviour
 
     }
 
-    public void Load(Dialogue dialogue,int id,Vector3 pos)
+    public void Load(Dialogue dialogue,int id)
     {
 
         Line l = dialogue.lines[id];
+
+        transform.position = l.BlockPosition;
 
         LineField.text = l.LineText;
         ID = l.ID;
@@ -128,9 +132,7 @@ public class LineBlock : MonoBehaviour
                 
                 GameObject block = BlockManager.instance.CreateEmptyBlock();
 
-                block.transform.position = pos + new Vector3(5, i * 3, 0);
-
-                block.GetComponent<LineBlock>().Load(dialogue,dialogue.lines[id].Next[i], block.transform.position);
+                block.GetComponent<LineBlock>().Load(dialogue,dialogue.lines[id].Next[i]);
 
                 NodeInteractions.instance.ConnectNodesAuto(this, block.GetComponent<LineBlock>());
             }

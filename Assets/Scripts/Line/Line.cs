@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class Line
@@ -10,4 +11,5 @@ public class Line
 
     public int ID;
 
+    public Vector3 BlockPosition;
 }
