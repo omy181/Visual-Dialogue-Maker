@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using TMPro;
+using SFB;
+
 public class SaveLoadSystem : MonoBehaviour
 {
     public LineBlock StartBlock;
@@ -30,9 +32,12 @@ public class SaveLoadSystem : MonoBehaviour
     public void Save()
     {
 
-        string p = EditorUtility.SaveFilePanel("Save Dialogue","","New Dialogue","dlog");
+        
 
-        if(p == "")
+        string p = StandaloneFileBrowser.SaveFilePanel("Save Dialogue", "", "New Dialogue", "dlog");
+        //EditorUtility.SaveFilePanel("Save Dialogue","","New Dialogue","dlog");
+
+        if (p == "")
         {
             Holylib.Debug.TextShower.ShowText("Couldn't save",4);
             return;
@@ -58,7 +63,9 @@ public class SaveLoadSystem : MonoBehaviour
 
     public void Load()
     {
-        string p = EditorUtility.OpenFilePanel("Open Dialogue", "","dlog");
+
+        string p = StandaloneFileBrowser.OpenFilePanel("Open Dialogue", "", "dlog",false)[0];
+            //EditorUtility.OpenFilePanel("Open Dialogue", "","dlog");
 
         if (!File.Exists(p))
         {
