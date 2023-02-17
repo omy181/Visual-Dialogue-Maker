@@ -10,10 +10,15 @@ public class BlockManager : MonoBehaviour
     public GameObject OutputNodePrefab;
     public GameObject InputNodePrefab;
 
+    public List<string> talkers = new();
+
     public static BlockManager instance ;
     private void Awake()
     {
         instance = this;
+
+        talkers.Add("Woman");
+        talkers.Add("Me");
     }
     void Update()
     {

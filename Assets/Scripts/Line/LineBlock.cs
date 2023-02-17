@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 public class LineBlock : MonoBehaviour
 {
-    [SerializeField] TMP_InputField TalkerField;
+    [SerializeField] TMP_Dropdown TalkerField;
     [SerializeField] TMP_InputField LineField;
-    [SerializeField] TMP_InputField ChoiceLabelField;
+    
 
     public int ID;
 
@@ -19,6 +19,9 @@ public class LineBlock : MonoBehaviour
     private void Start()
     {
         RefreshNodes();
+
+        if(TalkerField.options.Count == 0)
+            SetTalkers();
     }
 
     public void RefreshNodes()
@@ -62,9 +65,8 @@ public class LineBlock : MonoBehaviour
         {
             Line l = new Line();
 
-            l.ChoiceLabel = ChoiceLabelField.text;
             l.LineText = LineField.text;
-            l.Talker = TalkerField.text;
+            l.Talker = TalkerField.value;
 
             l.ID = ID;
 
@@ -97,10 +99,9 @@ public class LineBlock : MonoBehaviour
 
         Line l = dialogue.lines[id];
 
-        ChoiceLabelField.text = l.ChoiceLabel;
         LineField.text = l.LineText;
-        TalkerField.text = l.Talker;
         ID = l.ID;
+        SetTalkers(l.Talker);
 
         SaveLoadSystem.instance.lineblocks.Add(id,this);
 
@@ -132,6 +133,13 @@ public class LineBlock : MonoBehaviour
         }
     }
 
+    public void SetTalkers(int value = 0)
+    {
+        TalkerField.ClearOptions();
+        TalkerField.AddOptions(BlockManager.instance.talkers);
+        TalkerField.value = value;
+    }
+
     public void DeleteForUI()
     {
         Delete();
@@ -140,9 +148,8 @@ public class LineBlock : MonoBehaviour
     {
         if (StaticBlock)
         {
-            ChoiceLabelField.text = "";
             LineField.text = "";
-            TalkerField.text = "";
+            SetTalkers();
             return false;
         }
 

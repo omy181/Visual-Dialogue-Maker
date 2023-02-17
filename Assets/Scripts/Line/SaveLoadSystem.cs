@@ -43,6 +43,8 @@ public class SaveLoadSystem : MonoBehaviour
 
         StartBlock.Save(dialogue);
 
+        dialogue.talkers = BlockManager.instance.talkers;
+
         dialogue.lastID = lastID;
 
         string data = JsonUtility.ToJson(dialogue);
@@ -71,6 +73,8 @@ public class SaveLoadSystem : MonoBehaviour
         Dialogue dialogue = JsonUtility.FromJson<Dialogue>(json);
 
         CardSortingManager.instance.ClearEveryCard();
+
+        BlockManager.instance.talkers = dialogue.talkers;
 
         StartBlock.Load(dialogue,0,StartBlock.transform.position);
 

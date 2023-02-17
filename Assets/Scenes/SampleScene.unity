@@ -1476,7 +1476,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartBlock: {fileID: 996490600}
   lastID: 0
-  lineblocks: []
 --- !u!114 &1468106302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1492,6 +1491,7 @@ MonoBehaviour:
   EmptyBlock: {fileID: 5097909724789809875, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
   OutputNodePrefab: {fileID: 7597040276913399950, guid: f1012604c9c5dd4498a1be0cd202dba7, type: 3}
   InputNodePrefab: {fileID: 6726951491907857231, guid: 111090be14e6a134db6437d24cb2a83b, type: 3}
+  talkers: []
 --- !u!114 &1468106303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2262,50 +2262,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101673186}
   m_CullTransparentMesh: 1
---- !u!1 &2115724675
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2115724677}
-  - component: {fileID: 2115724676}
-  m_Layer: 0
-  m_Name: Trial
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2115724676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115724675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 182b407f06ab1674c84de8c800fe5a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2115724677
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115724675}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.599621, y: 4.544163, z: 0.0572245}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5097909725685489591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2440,6 +2396,26 @@ PrefabInstance:
     - target: {fileID: 5576264674001741935, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282032329779449656, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282032329779449656, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124008750660840790, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124008750660840790, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9651245
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124008750660840790, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3443396
       objectReference: {fileID: 0}
     - target: {fileID: 7959628915156876956, guid: 0ae0668ac897a394e973ef5b25149842, type: 3}
       propertyPath: StaticBlock
