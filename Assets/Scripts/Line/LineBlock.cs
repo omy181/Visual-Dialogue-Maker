@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Newtonsoft.Json.Linq;
+
 public class LineBlock : MonoBehaviour
 {
     [SerializeField] TMP_Dropdown TalkerField;
@@ -11,6 +13,8 @@ public class LineBlock : MonoBehaviour
 
     public int ID;
 
+    int lasttalkerfield;
+
     public Transform OutputsParent;
     public Transform InputsParent;
 
@@ -18,6 +22,8 @@ public class LineBlock : MonoBehaviour
 
     private void Start()
     {
+        BlockManager.instance.RefreshDialog += RefreshTalkers;
+
         RefreshNodes();
 
         if(TalkerField.options.Count == 0)
@@ -138,6 +144,14 @@ public class LineBlock : MonoBehaviour
         TalkerField.ClearOptions();
         TalkerField.AddOptions(BlockManager.instance.talkers);
         TalkerField.value = value;
+    }
+
+    public void RefreshTalkers()
+    {
+        int v = TalkerField.value;
+        TalkerField.ClearOptions();
+        TalkerField.AddOptions(BlockManager.instance.talkers);
+        TalkerField.value = v;
     }
 
     public void DeleteForUI()
