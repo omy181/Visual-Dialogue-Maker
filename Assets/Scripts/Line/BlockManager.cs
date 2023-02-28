@@ -14,6 +14,12 @@ public class BlockManager : MonoBehaviour
 
     public List<string> talkers = new();
 
+    public List<string> parameters = new();
+
+    public List<string> operators = new() { "=", "+", "-", "*", "/", ">", "<", "==", "!=", ">=", "<=" };
+
+    public GameObject ParameterPanelPrefab;
+
     public static BlockManager instance ;
     private void Awake()
     {
@@ -60,5 +66,29 @@ public class BlockManager : MonoBehaviour
         RefreshDialog();
 
         Holylib.Debug.TextShower.ShowText("Talker '"+ talker + "' added", 4);
+    }
+
+    [SerializeField] TMP_InputField ParameterField;
+
+    public void AddParameter()
+    {
+        string parameter = ParameterField.text;
+
+        if (parameter == "")
+        {
+            Holylib.Debug.TextShower.ShowText("Enter a parameter name", 4);
+            return;
+        }
+
+        if (parameters.Contains(parameter))
+        {
+            Holylib.Debug.TextShower.ShowText("Parameter '" + parameter + "' already exists", 4);
+            return;
+        }
+
+        parameters.Add(parameter);
+        RefreshDialog();
+
+        Holylib.Debug.TextShower.ShowText("Parameter '" + parameter + "' added", 4);
     }
 }

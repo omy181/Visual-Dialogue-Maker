@@ -49,6 +49,8 @@ public class SaveLoadSystem : MonoBehaviour
         StartBlock.Save(dialogue);
 
         dialogue.talkers = BlockManager.instance.talkers;
+        dialogue.operators = BlockManager.instance.operators;
+        dialogue.parameters = BlockManager.instance.parameters;
 
         dialogue.lastID = lastID;
 
@@ -82,6 +84,8 @@ public class SaveLoadSystem : MonoBehaviour
         CardSortingManager.instance.ClearEveryCard();
 
         BlockManager.instance.talkers = dialogue.talkers;
+        BlockManager.instance.parameters = dialogue.parameters;
+        BlockManager.instance.operators = dialogue.operators;
 
         StartBlock.Load(dialogue,0);
 

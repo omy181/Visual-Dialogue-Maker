@@ -9,7 +9,8 @@ public class LineBlock : MonoBehaviour
 {
     [SerializeField] TMP_Dropdown TalkerField;
     [SerializeField] TMP_InputField LineField;
-    
+
+    [SerializeField] Transform ParametersParent;
 
     public int ID;
 
@@ -79,6 +80,8 @@ public class LineBlock : MonoBehaviour
             l.BlockPosition = transform.position;
 
             l.Next = new();
+            l.Parameters = new();
+            SaveParameters(l);
 
             dialogue.lines.Add(ID,l);
             
@@ -112,6 +115,11 @@ public class LineBlock : MonoBehaviour
         LineField.text = l.LineText;
         ID = l.ID;
         SetTalkers(l.Talker);
+
+        for(int i = 0; i < l.Parameters.Count; i++)
+        {
+            CreateNewParameter(l.Parameters[i]);
+        }
 
         SaveLoadSystem.instance.lineblocks.Add(id,this);
 
@@ -156,6 +164,16 @@ public class LineBlock : MonoBehaviour
         TalkerField.value = v;
     }
 
+
+    public void SaveParameters(Line l)
+    {
+        for(int i = 0;i< ParametersParent.childCount-1; i++)
+        {
+            Parameter p = ParametersParent.GetChild(i).GetComponent<ParameterPanel>().SaveParameter();
+            l.Parameters.Add(p);
+        }
+    }
+
     public void DeleteForUI()
     {
         Delete();
@@ -186,5 +204,21 @@ public class LineBlock : MonoBehaviour
          Destroy(this.gameObject);
 
         return true;
+    }
+
+    public void CreateNewParameterUI()
+    {
+        CreateNewParameter();
+    }
+    public void CreateNewParameter(Parameter param = null)
+    {
+        GameObject p = Instantiate(BlockManager.instance.ParameterPanelPrefab, ParametersParent.transform);
+
+        if (param != null)
+        {
+            p.GetComponent<ParameterPanel>().SetParameters(param.Param,param.Operator,param.Value);
+        }
+
+        p.transform.SetSiblingIndex(p.transform.GetSiblingIndex()-1);
     }
 }
